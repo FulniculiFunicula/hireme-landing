@@ -188,5 +188,50 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+  <script>
+  const ENDPOINT = "YOUR_WEB_APP_URL_HERE"; // Google Script endpoint
+
+  const form = document.getElementById('signup');
+  const emailInput = document.getElementById('email');
+  const statusMsg = document.getElementById('status-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    if (!email) return;
+
+    const btn = form.querySelector('button');
+    const old = btn.textContent;
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, page: location.href, userAgent: navigator.userAgent })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        emailInput.value = '';
+        statusMsg.textContent = 'Thanks! You’re on the list 🎉';
+      } else {
+        statusMsg.textContent = 'Oops—please try again.';
+      }
+    } catch (err) {
+      statusMsg.textContent = 'Network error—try again later.';
+    } finally {
+      btn.textContent = old;
+      btn.disabled = false;
+    }
+  });
+</script>
+
 </body>
 </html>
+<form id="signup" class="signup">
+  <input id="email" name="email" type="email" placeholder="Enter your email" required>
+  <input type="text" name="website" style="display:none"> <!-- honeypot -->
+  <button class="btn btn--primary" type="submit">Join Early Access</button>
+</form>
+<p class="tiny muted" id="status-msg">No spam. We’ll notify you when the builder is live.</p>
