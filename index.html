@@ -245,6 +245,32 @@
 </script>
 
 </script>
+  <script>
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbzRO8EpWR0vBgMb06WhJ2KWNo5Rpm4uv36AGyyjIhqPYpCZvdQpMU2pRlmyibv5vY5d/exec";
+
+  const form = document.getElementById('signup');
+  const emailInput = document.getElementById('email');
+  const statusMsg = document.getElementById('status-msg');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    if (!email) return;
+
+    
+    const qs = new URLSearchParams({
+      email,
+      page: location.href,
+      userAgent: navigator.userAgent
+    }).toString();
+
+    new Image().src = `${ENDPOINT}?${qs}`;
+
+    emailInput.value = '';
+    statusMsg.textContent = 'Thanks! You’re on the list 🎉';
+  });
+</script>
+
 </body>
 </html>
 <form id="signup" class="signup">
