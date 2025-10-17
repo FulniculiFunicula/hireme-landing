@@ -215,27 +215,33 @@
     btn.disabled = true;
 
     try {
+      const body = new URLSearchParams({
+        email,
+        page: location.href,
+        userAgent: navigator.userAgent
+      });
+
       const res = await fetch(ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, page: location.href, userAgent: navigator.userAgent })
+        // NOTE: do NOT set Content-Type manually; the browser will set it correctly
+        body
       });
-      const data = await res.json();
-      if (data.ok) {
+
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && (data.ok === true || Object.keys(data).length === 0)) {
         emailInput.value = '';
         statusMsg.textContent = 'Thanks! You’re on the list 🎉';
       } else {
         statusMsg.textContent = 'Oops—please try again.';
       }
     } catch (err) {
-      statusMsg.textContent = 'Network error—try again later.';
+      statusMsg.textContent = 'Network error—try again in a moment.';
     } finally {
       btn.textContent = old;
       btn.disabled = false;
     }
   });
 </script>
-
 </body>
 </html>
 <form id="signup" class="signup">
