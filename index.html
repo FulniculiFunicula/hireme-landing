@@ -219,7 +219,8 @@
 
       const res = await fetch(ENDPOINT, {
         method: 'POST',
-        body 
+        mode: 'no-cors',
+        body
       });
       
       let ok = res.ok;
