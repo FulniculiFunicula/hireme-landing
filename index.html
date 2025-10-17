@@ -221,12 +221,11 @@
         userAgent: navigator.userAgent
       });
 
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        // NOTE: do NOT set Content-Type manually; the browser will set it correctly
-        body
-      });
-
+     const body = new URLSearchParams({
+  email,
+  page: location.href,
+  userAgent: navigator.userAgent
+})
       const data = await res.json().catch(() => ({}));
       if (res.ok && (data.ok === true || Object.keys(data).length === 0)) {
         emailInput.value = '';
