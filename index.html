@@ -194,7 +194,6 @@
     <p class="tiny muted center">© <span id="year"></span> HireMe. Student CV & Cover Letter studio.</p>
   </footer>
 <script>
-  // Use your real Google Web App URL
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbzRO8EpWR0vBgMb06WhJ2KWNo5Rpm4uv36AGyyjIhqPYpCZvdQpMU2pRlmyibv5vY5d/exec";
 
   const form = document.getElementById('signup');
@@ -212,7 +211,6 @@
     btn.disabled = true;
 
     try {
-      // ✅ Send data as form-encoded (no CORS issues!)
       const body = new URLSearchParams({
         email,
         page: location.href,
@@ -221,10 +219,9 @@
 
       const res = await fetch(ENDPOINT, {
         method: 'POST',
-        body // Browser sets headers automatically
+        body 
       });
-
-      // Handle success or empty response
+      
       let ok = res.ok;
       try {
         const data = await res.json();
