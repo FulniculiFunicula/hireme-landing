@@ -193,12 +193,9 @@
     </div>
     <p class="tiny muted center">© <span id="year"></span> HireMe. Student CV & Cover Letter studio.</p>
   </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-  <script>
-  const ENDPOINT = "https://script.google.com/macros/s/AKfycbzRO8EpWR0vBgMb06WhJ2KWNo5Rpm4uv36AGyyjIhqPYpCZvdQpMU2pRlmyibv5vY5d/exec"
+<script>
+  // Use your real Google Web App URL
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbzRO8EpWR0vBgMb06WhJ2KWNo5Rpm4uv36AGyyjIhqPYpCZvdQpMU2pRlmyibv5vY5d/exec";
 
   const form = document.getElementById('signup');
   const emailInput = document.getElementById('email');
@@ -215,31 +212,40 @@
     btn.disabled = true;
 
     try {
+      // ✅ Send data as form-encoded (no CORS issues!)
       const body = new URLSearchParams({
         email,
         page: location.href,
         userAgent: navigator.userAgent
       });
 
-     const body = new URLSearchParams({
-  email,
-  page: location.href,
-  userAgent: navigator.userAgent
-})
-      const data = await res.json().catch(() => ({}));
-      if (res.ok && (data.ok === true || Object.keys(data).length === 0)) {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        body // Browser sets headers automatically
+      });
+
+      // Handle success or empty response
+      let ok = res.ok;
+      try {
+        const data = await res.json();
+        if (data && data.ok) ok = true;
+      } catch (_) {}
+
+      if (ok) {
         emailInput.value = '';
         statusMsg.textContent = 'Thanks! You’re on the list 🎉';
       } else {
         statusMsg.textContent = 'Oops—please try again.';
       }
     } catch (err) {
-      statusMsg.textContent = 'Network error—try again in a moment.';
+      statusMsg.textContent = 'Network error—try again later.';
     } finally {
       btn.textContent = old;
       btn.disabled = false;
     }
   });
+</script>
+
 </script>
 </body>
 </html>
