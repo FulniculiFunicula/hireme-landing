@@ -193,58 +193,7 @@
     </div>
     <p class="tiny muted center">© <span id="year"></span> HireMe. Student CV & Cover Letter studio.</p>
   </footer>
-<script>
-  const ENDPOINT = "https://script.google.com/macros/s/AKfycbzRO8EpWR0vBgMb06WhJ2KWNo5Rpm4uv36AGyyjIhqPYpCZvdQpMU2pRlmyibv5vY5d/exec";
-
-  const form = document.getElementById('signup');
-  const emailInput = document.getElementById('email');
-  const statusMsg = document.getElementById('status-msg');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = emailInput.value.trim();
-    if (!email) return;
-
-    const btn = form.querySelector('button');
-    const old = btn.textContent;
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-
-    try {
-      const body = new URLSearchParams({
-        email,
-        page: location.href,
-        userAgent: navigator.userAgent
-      });
-
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        mode: 'no-cors',
-        body
-      });
-      
-      let ok = res.ok;
-      try {
-        const data = await res.json();
-        if (data && data.ok) ok = true;
-      } catch (_) {}
-
-      if (ok) {
-        emailInput.value = '';
-        statusMsg.textContent = 'Thanks! You’re on the list 🎉';
-      } else {
-        statusMsg.textContent = 'Oops—please try again.';
-      }
-    } catch (err) {
-      statusMsg.textContent = 'Network error—try again later.';
-    } finally {
-      btn.textContent = old;
-      btn.disabled = false;
-    }
-  });
-</script>
-
-</script>
+  
   <script>
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbzRO8EpWR0vBgMb06WhJ2KWNo5Rpm4uv36AGyyjIhqPYpCZvdQpMU2pRlmyibv5vY5d/exec";
 
