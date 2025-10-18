@@ -112,9 +112,10 @@
 
   <div class="form-embed">
     <iframe
+      id="earlyForm"
       src="https://docs.google.com/forms/d/e/1FAIpQLSefHqa9cQwa7YFw6u0sITTwTBuk4RQ1JcZlbexDlMulJpeQnA/viewform?embedded=true"
       width="100%"
-      height="900"
+      height="1100"
       frameborder="0"
       marginheight="0"
       marginwidth="0"
@@ -124,8 +125,34 @@
   </div>
 
   <p class="tiny" style="text-align:center;margin-top:10px">
-    Having trouble? <a href="https://docs.google.com/forms/d/e/1FAIpQLSefHqa9cQwa7YFw6u0sITTwTBuk4RQ1JcZlbexDlMulJpeQnA/viewform" target="_blank" rel="noopener">Open the form in a new tab</a>.
+    Having trouble? 
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSefHqa9cQwa7YFw6u0sITTwTBuk4RQ1JcZlbexDlMulJpeQnA/viewform" target="_blank" rel="noopener">
+      Open the form in a new tab
+    </a>.
   </p>
+</section>
+
+<script>
+  // Map browser language to form values
+  const langMap = { en: 'English', fr: 'French', nl: 'Dutch' };
+  const two = (navigator.language || 'en').slice(0,2).toLowerCase();
+  const picked = langMap[two] || 'English';
+
+  const fieldId = 'entry.1976422226'; // language field ID
+  const iframe = document.getElementById('earlyForm');
+
+  const sep = iframe.src.includes('?') ? '&' : '?';
+  iframe.src = iframe.src + sep + encodeURIComponent(fieldId) + '=' + encodeURIComponent(picked);
+</script>
+
+<style>
+  .form-embed iframe {
+    border: 0;
+    border-radius: 14px;
+    background: #fff;
+  }
+</style>
+
 </section>
 
         <div class="features">
