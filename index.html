@@ -2,74 +2,196 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HireMe – Student CV Builder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HireMe — Say it with confidence</title>
+  <meta name="description" content="HireMe — Student CV & Cover Letter studio. Say it with confidence: Hire Me." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <span class="logo" aria-hidden="true">
-        <svg class="cap" viewBox="0 0 24 24" fill="none" stroke="#FF7A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 12l-10 5L2 12l10-5 10 5z" />
-          <path d="M6 12v5a4 4 0 0 0 8 0v-5" />
-        </svg>
-      </span>
-      HireMe
+  <header class="nav">
+    <div class="container nav__inner">
+      <div class="brand">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 9l-10-5L2 9l10 5 10-5z"></path>
+            <path d="M6 12v5c3 2 9 2 12 0v-5"></path>
+            <path d="M18 17l0 3"></path>
+          </svg>
+        </div>
+        <span class="brand-text">Hire<span class="accent">Me</span></span>
+      </div>
+      <nav class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#preview">Preview</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="#signup" class="btn btn--primary">Join Early Access</a>
     </div>
-    <nav>
-      <a href="#how">How it works</a>
-      <a href="#preview">Preview</a>
-      <a href="#faq">FAQ</a>
-    </nav>
   </header>
 
-  <main class="hero">
-    <section class="card">
-      <h1>Say it with confidence: <span class="accent">Hire Me.</span></h1>
-      <p class="muted">
-        The student-friendly CV &amp; Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch.
-      </p>
+  <!-- HERO SECTION -->
+  <main>
+    <section class="hero">
+      <div class="container hero__grid">
+        <div>
+          <h1>Say it with confidence: <span class="accent italic">Hire Me</span>.</h1>
+          <p class="muted">The student-friendly CV & Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch.</p>
+          <form id="signup" class="signup" onsubmit="event.preventDefault(); alert('Thanks! We will notify you when HireMe launches.');">
+            <input type="email" placeholder="Enter your email" required>
+            <button class="btn btn--primary">Join Early Access</button>
+          </form>
+          <p class="tiny muted">No spam. We’ll notify you when the builder is live.</p>
+        </div>
+        <div>
+          <div class="card preview-card">
+            <div class="preview-heading">
+              <div class="logo-icon small">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M22 9l-10-5L2 9l10 5 10-5z"></path>
+                  <path d="M6 12v5c3 2 9 2 12 0v-5"></path>
+                  <path d="M18 17l0 3"></path>
+                </svg>
+              </div>
+              <div class="preview-title">Sample CV • Student</div>
+            </div>
+            <div class="cv-grid">
+              <div class="left">
+                <div class="bar bar--accent w-60"></div>
+                <div class="bar w-50"></div>
+                <div class="box h-120"></div>
+                <div class="bar w-70"></div>
+                <div class="box h-90 light"></div>
+              </div>
+              <div class="right">
+                <div class="bar w-80"></div>
+                <div class="bar w-100"></div>
+                <div class="bar w-90"></div>
+                <div class="bar w-85"></div>
+                <div class="box h-100 light"></div>
+                <div class="bar w-95"></div>
+                <div class="bar w-70"></div>
+              </div>
+            </div>
+            <div class="preview-footer">
+              <div class="muted tiny">ATS-friendly • Multilingual • PDF export</div>
+              <button class="btn btn--primary btn--sm" onclick="window.location='#preview'">Preview</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="features">
-      <div class="feature">
-        <h3><span class="accent">ATS-friendly</span></h3>
-        <p>Templates that pass screening</p>
+    <!-- PROBLEM SECTION -->
+    <section class="section">
+      <div class="container cards3">
+        <div class="card">
+          <h3>No experience?</h3>
+          <p class="muted">Turn school projects & volunteering into strong bullet points.</p>
+        </div>
+        <div class="card">
+          <h3>Unsure what to write?</h3>
+          <p class="muted">Smart prompts help you describe achievements, not chores.</p>
+        </div>
+        <div class="card">
+          <h3>Applying in multiple languages?</h3>
+          <p class="muted">Generate CVs in EN / FR / NL with consistent design.</p>
+        </div>
       </div>
-      <div class="feature">
-        <h3><span class="accent">Multilingual</span></h3>
-        <p>EN / FR / NL</p>
-      </div>
-      <div class="feature">
-        <h3><span class="accent">One-click</span></h3>
-        <p>PDF export</p>
+    </section>
+    <!-- HOW IT WORKS SECTION -->
+    <section id="how" class="section alt">
+      <div class="container">
+        <h2 class="center">How HireMe works</h2>
+        <div class="steps">
+          <div class="card step">
+            <div class="step-num">1</div>
+            <h3>Tell us about you</h3>
+            <p class="muted">Study, skills, projects, languages. 2–3 minutes.</p>
+          </div>
+          <div class="card step">
+            <div class="step-num">2</div>
+            <h3>AI crafts your CV</h3>
+            <p class="muted">Student-friendly content + clean layout in your language.</p>
+          </div>
+          <div class="card step">
+            <div class="step-num">3</div>
+            <h3>Download & apply</h3>
+            <p class="muted">Export to PDF, copy to LinkedIn, generate a cover letter.</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <footer>
-      <small>Sample CV • Student</small>
-    </footer>
-
-    <section class="card" id="how">
-      <h2>How it works</h2>
-      <ol>
-        <li>Pick a template and describe your experience in plain language.</li>
-        <li>Export a polished, ATS-friendly CV &amp; Cover Letter.</li>
-        <li>Use your personalized CV for internships, jobs, and scholarships.</li>
-      </ol>
+    <!-- PREVIEW SECTION -->
+    <section id="preview" class="section">
+      <div class="container preview-2col">
+        <div>
+          <h2>A warm, modern CV style students love</h2>
+          <ul class="list">
+            <li>Two-column layout with clean spacing</li>
+            <li>Icon accents & soft colors (brand orange + peach)</li>
+            <li>Multilingual template packs (EN/FR/NL)</li>
+            <li>ATS-friendly formatting</li>
+          </ul>
+          <a href="#signup" class="btn btn--primary">Get Early Access</a>
+        </div>
+        <div>
+          <div class="card cv-card">
+            <div class="avatar"></div>
+            <div class="cv-lines">
+              <div class="bar w-70"></div>
+              <div class="bar w-90"></div>
+              <div class="bar w-85"></div>
+              <div class="grid-6">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              </div>
+              <div class="box h-120 light"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
-
-    <section class="card" id="faq">
-      <h2>FAQ</h2>
-      <p><strong>When will it launch?</strong> We’re inviting early users soon. Stay tuned for updates.</p>
-      <p><strong>Is it free?</strong> Early access will be free. We’ll share pricing plans later.</p>
+    <!-- FAQ SECTION -->
+    <section id="faq" class="section alt">
+      <div class="container faq">
+        <h2 class="center">FAQ</h2>
+        <div class="card"><h3>Is HireMe free?</h3><p class="muted">We’ll launch with a generous free tier for students, plus optional premium templates and cover letters.</p></div>
+        <div class="card"><h3>Which languages are supported?</h3><p class="muted">English, French, and Dutch to start — with more languages coming soon.</p></div>
+        <div class="card"><h3>Will my CV pass ATS?</h3><p class="muted">Yes. Our templates follow ATS-friendly structure and typography. Always review your final output before submitting.</p></div>
+      </div>
     </section>
   </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="brand">
+        <div class="logo-icon small">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 9l-10-5L2 9l10 5 10-5z"></path>
+            <path d="M6 12v5c3 2 9 2 12 0v-5"></path>
+            <path d="M18 17l0 3"></path>
+          </svg>
+        </div>
+        <span class="brand-text">Hire<span class="accent">Me</span></span>
+      </div>
+      <a href="#signup" class="btn btn--primary">Join Early Access</a>
+    </div>
+    <p class="tiny muted center">© <span id="year"></span> HireMe. Student CV & Cover Letter studio.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
 
-           
+       
  
 
 
