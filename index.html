@@ -1,180 +1,103 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HireMe — Student CV & Cover Letter studio</title>
-  <meta name="description" content="Create a beautiful, ATS-friendly resume and cover letter in minutes — in English, French, or Dutch." />
-  <link rel="icon" href="favicon.svg" />
-  <!-- Your existing stylesheet -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HireMe – Student CV Builder</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-  <!-- =========================
-       Header / Brand + Nav
-  ========================== -->
-  <header class="header">
-    <div class="container header__grid">
-      <div class="brand">
-        <span class="logo" aria-hidden="true">
-          <!-- mortarboard icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="#FF7A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="24" height="24">
-            <path d="M22 12L5 2 2 12l3 2 3-2 3 2 3-2 3 2 3-2z"></path>
-            <path d="M6 12.5v5a4 4 0 0 0 12 0v-5"></path>
-          </svg>
-        </span>
-        HireMe
-      </div>
-
-      <nav class="nav">
-        <a href="#how">How it works</a>
-        <a href="#preview">Preview</a>
-        <a href="#faq">FAQ</a>
-      </nav>
+  <header>
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg class="cap" viewBox="0 0 24 24" fill="none" stroke="#FF7A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12l-10 5L2 12l10-5 10 5z" />
+          <path d="M6 12v5a4 4 0 0 0 8 0v-5" />
+        </svg>
+      </span>
+      HireMe
     </div>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#preview">Preview</a>
+      <a href="#faq">FAQ</a>
+    </nav>
   </header>
 
-  <!-- =========================
-       Hero
-  ========================== -->
   <main class="hero">
-    <div class="container hero__grid">
-      <div>
-        <h1>Say it with confidence: <span class="accent italic">Hire Me</span>.</h1>
-        <p class="muted">
-          The student-friendly CV &amp; Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch.
+    <section class="card">
+      <h1>Say it with confidence: <span class="accent">Hire Me.</span></h1>
+      <p class="muted">
+        The student-friendly CV &amp; Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch.
+      </p>
+
+      <!-- Clean Early-Access Section -->
+      <section class="card" id="early-access">
+        <h2 style="margin:0 0 12px">Join Early Access</h2>
+        <p class="muted" style="margin:0 0 16px">
+          No spam. We’ll notify you when the builder is live.
         </p>
 
-        <!-- Languages note -->
-        <p class="tiny muted" style="margin:6px 0 16px">
-          Available in <strong>English</strong>, <strong>French</strong> &amp; <strong>Dutch</strong>.
+        <p class="tiny" style="margin:0 0 12px">
+          🌍 <strong>Available in English, French &amp; Dutch</strong>
         </p>
 
-        <!-- Join button (opens Google Form in a new tab) -->
         <a
-          id="join"
           class="btn btn--primary"
-          href="https://docs.google.com/forms/d/e/1FAIpQLSefHqa9cQwa7YFw6u0sITTwTBuk4RQ1JcZlbexDlMulJpeQnA/viewform"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSefHqa9cQwa7YFw6u0sITTwTBuk4RQ1JcZlbexDlMulJpeQnA/viewform?usp=pp_url"
           target="_blank"
           rel="noopener"
         >
-          Join Early Access
+          Join Early Access →
         </a>
 
-        <p class="tiny muted" style="margin-top:10px">
-          Prefer to open the form directly? <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSefHqa9cQwa7YFw6u0sITTwTBuk4RQ1JcZlbexDlMulJpeQnA/viewform"
+        <p class="tiny" style="margin-top:10px">
+          Prefer Google Forms? 
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSefHqa9cQwa7YFw6u0sITTwTBuk4RQ1JcZlbexDlMulJpeQnA/viewform?usp=pp_url"
             target="_blank"
             rel="noopener"
-          >Click here</a>.
+          >Open the form in a new tab</a>.
         </p>
+      </section>
+    </section>
+
+    <section class="features">
+      <div class="feature">
+        <h3><span class="accent">ATS-friendly</span></h3>
+        <p>Templates that pass screening</p>
       </div>
-
-      <!-- Preview card (static visual / matches your styling) -->
-      <div class="card preview-card" id="preview">
-        <div class="preview-heading">Sample CV • Student</div>
-        <div class="logo-icon small" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="32" height="32">
-            <path d="M22 12 5 2 2 12l3 2 3-2 3 2 3-2 3 2 3-2z"></path>
-            <path d="M6 12.5v5a4 4 0 0 0 12 0v-5"></path>
-          </svg>
-        </div>
-
-        <div class="preview-title">ATS-friendly • Multilingual • PDF export</div>
-        <div class="preview-badges">
-          <div class="badge">
-            <div class="badge-title accent">ATS-friendly</div>
-            <div class="badge-text">templates that pass screening</div>
-          </div>
-          <div class="badge">
-            <div class="badge-title accent">Multilingual</div>
-            <div class="badge-text">EN / FR / NL</div>
-          </div>
-          <div class="badge">
-            <div class="badge-title accent">One-click</div>
-            <div class="badge-text">PDF export</div>
-          </div>
-        </div>
+      <div class="feature">
+        <h3><span class="accent">Multilingual</span></h3>
+        <p>EN / FR / NL</p>
       </div>
-    </div>
-  </main>
+      <div class="feature">
+        <h3><span class="accent">One-click</span></h3>
+        <p>PDF export</p>
+      </div>
+    </section>
 
-  <!-- =========================
-       How it works
-  ========================== -->
-  <section id="how" class="section">
-    <div class="container">
+    <footer>
+      <small>Sample CV • Student</small>
+    </footer>
+
+    <section class="card" id="how">
       <h2>How it works</h2>
-      <ol class="steps">
+      <ol>
         <li>Join early access and get your invite.</li>
         <li>Pick a template and describe your experience in plain language.</li>
         <li>Export a polished, ATS-friendly CV &amp; Cover Letter.</li>
       </ol>
-    </div>
-  </section>
+    </section>
 
-  <!-- =========================
-       FAQ
-  ========================== -->
-  <section id="faq" class="section">
-    <div class="container">
+    <section class="card" id="faq">
       <h2>FAQ</h2>
-
-      <div class="faq">
-        <div class="faq-item">
-          <h3>When will it launch?</h3>
-          <p class="muted">We’re inviting early users soon. Join the list above.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>Is it free?</h3>
-          <p class="muted">Early access will be free. We’ll share plans later.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>What languages are supported?</h3>
-          <p class="muted">English, French, and Dutch — with more to come.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>Does it pass ATS?</h3>
-          <p class="muted">Yes. Our templates are designed to be ATS-friendly.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-       Footer
-  ========================== -->
-  <footer class="footer">
-    <div class="container footer__grid">
-      <div class="brand">
-        <span class="logo-icon small" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="20" height="20">
-            <path d="M22 12 5 2 2 12l3 2 3-2 3 2 3-2 3 2 3-2z"></path>
-            <path d="M6 12.5v5a4 4 0 0 0 12 0v-5"></path>
-          </svg>
-        </span>
-        <span class="brand-text">Hire<span class="accent">Me</span></span>
-      </div>
-
-      <a href="#join" class="btn btn--primary">Join Early Access</a>
-    </div>
-
-    <p class="tiny muted center">© <span id="year"></span> HireMe. Student CV &amp; Cover Letter studio.</p>
-  </footer>
-
-  <!-- Year helper -->
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+      <p><strong>When will it launch?</strong> We’re inviting early users soon. Join the list above.</p>
+      <p><strong>Is it free?</strong> Early access will be free. We’ll share plans later.</p>
+    </section>
+  </main>
 </body>
 </html>
-
-      
-//Replace with final Option B index
            
  
 
