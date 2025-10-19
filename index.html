@@ -40,10 +40,33 @@
         <div>
           <h1>Say it with confidence: <span class="accent italic">Hire Me</span>.</h1>
           <p class="muted">The student-friendly CV & Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch.</p>
-          <form id="signup" class="signup" onsubmit="event.preventDefault(); alert('Thanks! We will notify you when HireMe launches.');">
-            <input type="email" placeholder="Enter your email" required>
-            <button class="btn btn--primary">Join Early Access</button>
-          </form>
+         <!-- HERO SIGNUP (with Language) -->
+<form id="signup" class="signup" style="display:flex; gap:12px; align-items:center;">
+  <select id="language" class="lang-select" aria-label="Preferred language" required style="height:56px; padding:0 12px; border-radius:14px; border:1px solid rgba(0,0,0,.1); background:#fff;">
+    <option value="" disabled selected>Language</option>
+    <option>English</option>
+    <option>French</option>
+    <option>Dutch</option>
+  </select>
+
+  <input
+    id="email"
+    type="email"
+    inputmode="email"
+    placeholder="you@example.com"
+    aria-label="Email"
+    required
+    style="flex:1; height:56px; padding:0 18px; border-radius:14px; border:1px solid rgba(0,0,0,.1);"
+  />
+
+  <button type="submit" class="btn btn--primary" style="height:56px;">
+    Join Early Access
+  </button>
+</form>
+
+<!-- invisible target so we don't navigate away when posting to Google Forms -->
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
           <p class="tiny muted">No spam. We’ll notify you when the builder is live.</p>
         </div>
         <div>
