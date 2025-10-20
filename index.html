@@ -1,232 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HireMe — Student CV & Cover Letter</title>
-  <meta name="description" content="The student-friendly CV & Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch." />
-  <link rel="icon" href="favicon.svg" />
+  <title>HireMe — Say it with confidence</title>
+  <meta name="description" content="HireMe — Student CV & Cover Letter studio. Say it with confidence: Hire Me." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* Small helpers so the new select aligns perfectly */
-    .signup { display: flex; gap: 12px; align-items: center; }
-    .signup .lang-select,
-    .signup input[type="email"],
-    .signup button { height: 56px; }
-    .signup .lang-select {
-      padding: 0 12px; border-radius: 14px; border: 1px solid rgba(0,0,0,.1); background: #fff;
-    }
-    .email-input {
-      flex: 1; padding: 0 18px; border-radius: 14px; border: 1px solid rgba(0,0,0,.1);
-    }
-    .tiny-note { font-size: 14px; opacity: .75; }
-  </style>
 </head>
-
 <body>
-  <!-- Header -->
-  <header>
-    <div class="container header__grid">
+  <header class="nav">
+    <div class="container nav__inner">
       <div class="brand">
-        <span class="logo" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#FF7A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="24" height="24">
-            <path d="M22 12L12 5 2 12l10 7 10-7z"></path>
-            <path d="M6 12v5a6 6 0 0 0 12 0v-5"></path>
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 9l-10-5L2 9l10 5 10-5z"></path>
+            <path d="M6 12v5c3 2 9 2 12 0v-5"></path>
+            <path d="M18 17l0 3"></path>
           </svg>
-        </span>
-        HireMe
+        </div>
+        <span class="brand-text">Hire<span class="accent">Me</span></span>
       </div>
-      <nav class="nav">
+      <nav class="nav-links">
         <a href="#how">How it works</a>
         <a href="#preview">Preview</a>
         <a href="#faq">FAQ</a>
       </nav>
+      <a href="#signup" class="btn btn--primary">Join Early Access</a>
     </div>
   </header>
 
-  <!-- Hero -->
-  <main class="hero">
-    <div class="container hero__grid">
-      <!-- Left: copy + signup -->
-      <section class="card">
-        <h1>Say it with confidence: <span class="accent">Hire Me</span>.</h1>
-        <p class="muted">
-          The student-friendly CV &amp; Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch.
-        </p>
+  <!-- HERO SECTION -->
+  <main>
+    <section class="hero">
+      <div class="container hero__grid">
+        <div>
+          <h1>Say it with confidence: <span class="accent italic">Hire Me</span>.</h1>
+          <p class="muted">The student-friendly CV & Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch.</p>
+          <form id="signup" class="signup" onsubmit="event.preventDefault(); alert('Thanks! We will notify you when HireMe launches.');">
+            <input type="email" placeholder="Enter your email" required>
+            <button class="btn btn--primary">Join Early Access</button>
+          </form>
+          <p class="tiny muted">No spam. We’ll notify you when the builder is live.</p>
+        </div>
+        <div>
+          <div class="card preview-card">
+            <div class="preview-heading">
+              <div class="logo-icon small">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M22 9l-10-5L2 9l10 5 10-5z"></path>
+                  <path d="M6 12v5c3 2 9 2 12 0v-5"></path>
+                  <path d="M18 17l0 3"></path>
+                </svg>
+              </div>
+              <div class="preview-title">Sample CV • Student</div>
+            </div>
+            <div class="cv-grid">
+              <div class="left">
+                <div class="bar bar--accent w-60"></div>
+                <div class="bar w-50"></div>
+                <div class="box h-120"></div>
+                <div class="bar w-70"></div>
+                <div class="box h-90 light"></div>
+              </div>
+              <div class="right">
+                <div class="bar w-80"></div>
+                <div class="bar w-100"></div>
+                <div class="bar w-90"></div>
+                <div class="bar w-85"></div>
+                <div class="box h-100 light"></div>
+                <div class="bar w-95"></div>
+                <div class="bar w-70"></div>
+              </div>
+            </div>
+            <div class="preview-footer">
+              <div class="muted tiny">ATS-friendly • Multilingual • PDF export</div>
+              <button class="btn btn--primary btn--sm" onclick="window.location='#preview'">Preview</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- HERO SIGNUP (Language + Email + Button) -->
-        <form id="signup" class="signup" autocomplete="on">
-          <select id="language" class="lang-select" aria-label="Preferred language" required>
-            <option value="" disabled selected>Language</option>
-            <option>English</option>
-            <option>French</option>
-            <option>Dutch</option>
-          </select>
+    <!-- PROBLEM SECTION -->
+    <section class="section">
+      <div class="container cards3">
+        <div class="card">
+          <h3>No experience?</h3>
+          <p class="muted">Turn school projects & volunteering into strong bullet points.</p>
+        </div>
+        <div class="card">
+          <h3>Unsure what to write?</h3>
+          <p class="muted">Smart prompts help you describe achievements, not chores.</p>
+        </div>
+        <div class="card">
+          <h3>Applying in multiple languages?</h3>
+          <p class="muted">Generate CVs in EN / FR / NL with consistent design.</p>
+        </div>
+      </div>
+    </section>
+    <!-- HOW IT WORKS SECTION -->
+    <section id="how" class="section alt">
+      <div class="container">
+        <h2 class="center">How HireMe works</h2>
+        <div class="steps">
+          <div class="card step">
+            <div class="step-num">1</div>
+            <h3>Tell us about you</h3>
+            <p class="muted">Study, skills, projects, languages. 2–3 minutes.</p>
+          </div>
+          <div class="card step">
+            <div class="step-num">2</div>
+            <h3>AI crafts your CV</h3>
+            <p class="muted">Student-friendly content + clean layout in your language.</p>
+          </div>
+          <div class="card step">
+            <div class="step-num">3</div>
+            <h3>Download & apply</h3>
+            <p class="muted">Export to PDF, copy to LinkedIn, generate a cover letter.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-          <input id="email" type="email" inputmode="email" placeholder="you@example.com" aria-label="Email" required class="email-input" />
-
-          <button type="submit" class="btn btn--primary">Join Early Access</button>
-        </form>
-
-        <p class="tiny muted" style="margin-top:10px">
-          No spam. We’ll notify you when the builder is live.
-        </p>
-
-        <p class="tiny tiny-note" style="margin-top:6px">
-          <span style="display:inline-flex;align-items:center;gap:6px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="#00C853" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>
-            Available in English, French &amp; Dutch
-          </span>
-          &nbsp;·&nbsp;
-          Prefer Google Forms?
-          <a id="open-form-tab" href="#" target="_blank" rel="noopener">Open in a new tab</a>.
-        </p>
-      </section>
-
-      <!-- Right: preview card (kept from your original look) -->
-      <aside class="card preview-card" id="preview">
-        <div class="preview-heading">Sample CV • Student</div>
-        <div class="preview-title accent">ATS-friendly • Multilingual • PDF export</div>
-        <div class="preview-ghost" style="height:12px;width:80%;background:#f3e9e2;border-radius:6px;margin:10px 0;"></div>
-        <div class="preview-ghost" style="height:120px;background:#fff3ec;border:1px dashed #ffd2bd;border-radius:12px;margin:10px 0;"></div>
-        <div class="preview-ghost" style="height:12px;width:70%;background:#f3e9e2;border-radius:6px;margin:10px 0;"></div>
-      </aside>
-    </div>
+    <!-- PREVIEW SECTION -->
+    <section id="preview" class="section">
+      <div class="container preview-2col">
+        <div>
+          <h2>A warm, modern CV style students love</h2>
+          <ul class="list">
+            <li>Two-column layout with clean spacing</li>
+            <li>Icon accents & soft colors (brand orange + peach)</li>
+            <li>Multilingual template packs (EN/FR/NL)</li>
+            <li>ATS-friendly formatting</li>
+          </ul>
+          <a href="#signup" class="btn btn--primary">Get Early Access</a>
+        </div>
+        <div>
+          <div class="card cv-card">
+            <div class="avatar"></div>
+            <div class="cv-lines">
+              <div class="bar w-70"></div>
+              <div class="bar w-90"></div>
+              <div class="bar w-85"></div>
+              <div class="grid-6">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              </div>
+              <div class="box h-120 light"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- FAQ SECTION -->
+    <section id="faq" class="section alt">
+      <div class="container faq">
+        <h2 class="center">FAQ</h2>
+        <div class="card"><h3>Is HireMe free?</h3><p class="muted">We’ll launch with a generous free tier for students, plus optional premium templates and cover letters.</p></div>
+        <div class="card"><h3>Which languages are supported?</h3><p class="muted">English, French, and Dutch to start — with more languages coming soon.</p></div>
+        <div class="card"><h3>Will my CV pass ATS?</h3><p class="muted">Yes. Our templates follow ATS-friendly structure and typography. Always review your final output before submitting.</p></div>
+      </div>
+    </section>
   </main>
 
-  <!-- Features -->
-  <section class="features container">
-    <div class="card feature">
-      <h3 class="accent">ATS-friendly</h3>
-      <p>Templates that pass screening</p>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="brand">
+        <div class="logo-icon small">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 9l-10-5L2 9l10 5 10-5z"></path>
+            <path d="M6 12v5c3 2 9 2 12 0v-5"></path>
+            <path d="M18 17l0 3"></path>
+          </svg>
+        </div>
+        <span class="brand-text">Hire<span class="accent">Me</span></span>
+      </div>
+      <a href="#signup" class="btn btn--primary">Join Early Access</a>
     </div>
-    <div class="card feature">
-      <h3 class="accent">Multilingual</h3>
-      <p>EN / FR / NL</p>
-    </div>
-    <div class="card feature">
-      <h3 class="accent">One-click</h3>
-      <p>PDF export</p>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="card container" id="how">
-    <h2>How it works</h2>
-    <ol class="muted">
-      <li>Pick a template and describe your experience in plain language.</li>
-      <li>Export a polished, ATS-friendly CV &amp; Cover Letter.</li>
-      <li>Use your personalized CV for internships, jobs, and scholarships.</li>
-    </ol>
-  </section>
-
-  <!-- FAQ -->
-  <section class="card container" id="faq">
-    <h2>FAQ</h2>
-    <p><strong>When will it launch?</strong> We’re inviting early users soon. Join the list above.</p>
-    <p><strong>Is it free?</strong> Early access will be free. We’ll share plans later.</p>
-  </section>
-
-  <!-- Footer -->
-  <footer class="container" style="margin:64px auto 48px;">
-    <p class="tiny muted">© <span id="year"></span> HireMe. Student CV &amp; Cover Letter studio.</p>
+    <p class="tiny muted center">© <span id="year"></span> HireMe. Student CV & Cover Letter studio.</p>
   </footer>
 
-  <!-- Hidden proxy for Google Form (submits in the background) -->
-  <iframe name="hidden_iframe" style="display:none;"></iframe>
-  <form id="gform" method="POST" target="hidden_iframe" style="display:none;"></form>
-
   <script>
-    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // ====== CONFIG — Your Google Form ======
-    // Your live Form ID (we send to /formResponse)
-    const FORM_ID = '1FAIpQLSefHqa9cQwa7YFw6u0sITTwTBuk4RQ1JcZlbexDlMulJpeQnA';
-    // Field IDs (entry.<id>): set these correctly for YOUR form:
-    const ENTRY_EMAIL = 'https://docs.google.com/forms/d/e/1FAIpQLSefHqa9cQwa7YFw6u0sITTwTBuk4RQ1JcZlbexDlMulJpeQnA/viewform?usp=pp_url';     // TODO: replace with your Email question's entry.<id>
-    const ENTRY_LANG  = 'entry_1976422226';     // Language question (you shared earlier)
-
-    const FORM_ACTION = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
-    const FORM_VIEW   = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform`;
-
-    // Elements
-    const formEl   = document.getElementById('signup');
-    const emailEl  = document.getElementById('email');
-    const langEl   = document.getElementById('language');
-    const gform    = document.getElementById('gform');
-    const openTab  = document.getElementById('open-form-tab');
-
-    // Make the “Open in a new tab” link honor selected language
-    function refreshOpenTabLink() {
-      const url = new URL(FORM_VIEW);
-      const lang = langEl.value;
-      if (lang && ENTRY_LANG.startsWith('entry_')) {
-        url.searchParams.set(ENTRY_LANG.replace('entry_', 'entry.'), lang);
-      }
-      openTab.href = url.toString();
-    }
-    refreshOpenTabLink();
-    langEl.addEventListener('change', refreshOpenTabLink);
-
-    // Build hidden form fields and submit to Google Form (no page reload)
-    function ensureHiddenFields() {
-      gform.innerHTML = '';
-      gform.action = FORM_ACTION;
-
-      const fEmail = document.createElement('input');
-      fEmail.type = 'hidden';
-      fEmail.name = ENTRY_EMAIL.replace('entry_', 'entry.');
-      gform.appendChild(fEmail);
-
-      const fLang = document.createElement('input');
-      fLang.type = 'hidden';
-      fLang.name = ENTRY_LANG.replace('entry_', 'entry.');
-      gform.appendChild(fLang);
-
-      return { fEmail, fLang };
-    }
-
-    formEl.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = emailEl.value.trim();
-      const lang  = langEl.value;
-
-      if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-        alert('Please enter a valid email address.');
-        emailEl.focus();
-        return;
-      }
-      if (!lang) {
-        alert('Please choose your preferred language.');
-        langEl.focus();
-        return;
-      }
-
-      const { fEmail, fLang } = ensureHiddenFields();
-      fEmail.value = email;
-      fLang.value  = lang;
-
-      // submit in background
-      gform.submit();
-
-      // friendly UX
-      const btn = formEl.querySelector('button[type="submit"]');
-      const old = btn.textContent;
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
-
-      setTimeout(() => {
-        btn.textContent = old;
-        btn.disabled = false;
-        formEl.reset();
-        refreshOpenTabLink();
-        alert('Thanks! We will notify you when HireMe launches.');
-      }, 900);
-    });
   </script>
 </body>
 </html>
+
+       
+
+ 
+   
+
+
+
+   
+
+   
+     
+   
 
        
  
