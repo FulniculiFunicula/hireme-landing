@@ -188,6 +188,65 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+<!-- AUTH MODAL -->
+<div id="authModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="modal__card">
+    <h3 id="authTitle" style="margin:0 0 10px">Sign in</h3>
+    <p class="muted" style="margin:0 0 16px">Use your email to continue.</p>
+
+    <form id="authForm" class="stack" onsubmit="event.preventDefault(); alert('This is a placeholder. Hook up your auth later.'); closeAuth();">
+      <input type="email" id="authEmail" placeholder="you@example.com" required style="width:100%; padding:12px; border-radius:10px; border:1px solid #eee;"/>
+      <div style="display:flex; gap:8px; margin-top:12px">
+        <button type="submit" class="btn btn--primary" style="flex:1">Continue</button>
+        <button type="button" class="btn btn--ghost" onclick="closeAuth()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Minimal styles for the modal (scoped) -->
+<style>
+  .modal{position:fixed; inset:0; background:rgba(0,0,0,.35); display:flex; align-items:center; justify-content:center; padding:1rem; z-index:999}
+  .modal.hidden{display:none}
+  .modal__card{background:#fff; border-radius:16px; padding:24px; width:min(420px,90vw); box-shadow:0 20px 60px rgba(0,0,0,.14)}
+  .stack{display:grid; gap:.75rem}
+</style>
+
+<!-- Language + sign-in behavior -->
+<script>
+  (function(){
+    const LANG_KEY = 'hireme.lang';
+    const $html = document.documentElement;
+    const $switcher = document.getElementById('langSwitcher');
+
+    // Initialize from saved language (or default <html lang="...">)
+    const saved = localStorage.getItem(LANG_KEY);
+    const initial = saved || $html.getAttribute('lang') || 'en';
+    $html.setAttribute('lang', initial);
+    if ($switcher) $switcher.value = initial;
+
+    // Change language + persist
+    if ($switcher){
+      $switcher.addEventListener('change', e=>{
+        const v = e.target.value || 'en';
+        localStorage.setItem(LANG_KEY, v);
+        $html.setAttribute('lang', v);
+        // Optional: update text via data-i18n if you add translations later.
+      });
+    }
+
+    // Sign in modal open/close
+    const $modal = document.getElementById('authModal');
+    const $open = document.getElementById('signInBtn');
+    window.closeAuth = () => $modal.classList.add('hidden');
+    function openAuth(){ $modal.classList.remove('hidden'); document.getElementById('authEmail').focus(); }
+
+    if ($open){ $open.addEventListener('click', openAuth); }
+    // Close modal on ESC
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeAuth(); });
+  })();
+</script>
+
 </body>
 </html>
 
