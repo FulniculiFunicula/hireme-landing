@@ -384,6 +384,88 @@
     }
   })();
 </script>
+<!-- =========================
+     AUTH MODAL (Sign in / Sign up)
+     ========================= -->
+<div id="authModal" class="modal" aria-hidden="true">
+  <div class="modal__overlay" data-auth-close></div>
+
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <button class="modal__close" type="button" aria-label="Close" data-auth-close>×</button>
+
+    <!-- Header / Switch -->
+    <div class="auth__tabs" role="tablist">
+      <button id="tabSignIn" class="auth__tab is-active" role="tab" aria-selected="true" data-auth-tab="signin">
+        <span data-i18n="auth.signIn">Sign in</span>
+      </button>
+      <button id="tabSignUp" class="auth__tab" role="tab" aria-selected="false" data-auth-tab="signup">
+        <span data-i18n="auth.signUp">Create account</span>
+      </button>
+    </div>
+
+    <!-- Sign in -->
+    <form id="formSignIn" class="auth__panel is-active" novalidate>
+      <h3 id="authTitle" class="auth__title" data-i18n="auth.welcomeBack">Welcome back</h3>
+
+      <label class="auth__label">
+        <span data-i18n="auth.email">Email</span>
+        <input id="siEmail" class="auth__input" type="email" autocomplete="email" required />
+      </label>
+
+      <label class="auth__label">
+        <span data-i18n="auth.password">Password</span>
+        <input id="siPassword" class="auth__input" type="password" autocomplete="current-password" required />
+      </label>
+
+      <div class="auth__row">
+        <a class="auth__link" href="#" data-i18n="auth.forgot">Forgot your password?</a>
+      </div>
+
+      <button class="btn btn--primary auth__submit" type="submit" data-i18n="auth.signIn">Sign in</button>
+
+      <p class="auth__hint">
+        <span data-i18n="auth.noAccount">Don’t have an account?</span>
+        <a href="#" data-auth-tab="signup" class="auth__link" data-i18n="auth.createOne">Create one</a>
+      </p>
+
+      <p id="siError" class="auth__error" role="alert" hidden></p>
+    </form>
+
+    <!-- Sign up -->
+    <form id="formSignUp" class="auth__panel" novalidate>
+      <h3 class="auth__title" data-i18n="auth.letsStart">Let’s get you started</h3>
+
+      <label class="auth__label">
+        <span data-i18n="auth.name">Full name</span>
+        <input id="suName" class="auth__input" type="text" autocomplete="name" required />
+      </label>
+
+      <label class="auth__label">
+        <span data-i18n="auth.email">Email</span>
+        <input id="suEmail" class="auth__input" type="email" autocomplete="email" required />
+      </label>
+
+      <label class="auth__label">
+        <span data-i18n="auth.password">Password</span>
+        <input id="suPassword" class="auth__input" type="password" autocomplete="new-password" required />
+      </label>
+
+      <label class="auth__checkbox">
+        <input id="suTerms" type="checkbox" required />
+        <span data-i18n="auth.agree">I agree to the Terms</span>
+      </label>
+
+      <button class="btn btn--primary auth__submit" type="submit" data-i18n="auth.createAccount">Create account</button>
+
+      <p class="auth__hint">
+        <span data-i18n="auth.haveAccount">Already have an account?</span>
+        <a href="#" data-auth-tab="signin" class="auth__link" data-i18n="auth.signIn">Sign in</a>
+      </p>
+
+      <p id="suError" class="auth__error" role="alert" hidden></p>
+    </form>
+  </div>
+</div>
 
 </body>
 </html>
