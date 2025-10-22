@@ -96,9 +96,10 @@ function flashGlow(cardEl) {
       }
 
       // Character counter
-      input.addEventListener("input", () => {
-        charCount.textContent = input.value.length + " chars";
-      });
+     input.addEventListener("input", () => {
+  const count = input.value.length;
+  charCount.textContent = `${count} character${count !== 1 ? "s" : ""}`;
+});
 
       // Preset prompt clicks
       presetBar.addEventListener("click", (e) => {
