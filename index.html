@@ -1,80 +1,52 @@
-// Vercel Serverless Function: POST /api/generate
-// No packages needed. Uses built-in fetch and your OPENAI_API_KEY env var.
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GetHireMe — AI Assistant</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>GetHireMe — AI Assistant</h1>
 
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Method not allowed' });
-    return;
-  }
+      <section class="ai-box">
+        <textarea id="ai-input" rows="6" placeholder="Paste a job description or resume bullet here..."></textarea>
+        <button id="ai-run">Generate</button>
+        <pre id="ai-output" class="ai-output"></pre>
+      </section>
+    </main>
 
-  try {
-    const { prompt } = req.body || {};
-    if (!prompt || !prompt.trim()) {
-      res.status(400).json({ error: 'Prompt is required' });
-      return;
-    }
+    <script>
+      const btn = document.getElementById("ai-run");
+      const input = document.getElementById("ai-input");
+      const out = document.getElementById("ai-output");
 
-    const r = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          { role: 'system', content: 'You help job seekers tailor resumes and write cover letters. Be concise and actionable.' },
-          { role: 'user', content: prompt }
-        ]
-      })
-    });
+      btn.addEventListener("click", async () => {
+        const prompt = input.value.trim();
+        if (!prompt) { out.textContent = "Please write something first."; return; }
 
-    if (!r.ok) {
-      const errText = await r.text();
-      res.status(500).json({ error: `OpenAI error: ${errText}` });
-      return;
-    }
+        btn.disabled = true;
+        out.textContent = "Generating...";
 
-    const data = await r.json();
-    const text = data?.choices?.[0]?.message?.content ?? '';
-    res.status(200).json({ text });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-};
-<section class="ai-box">
-  <h2>GetHireMe — AI Assistant</h2>
-  <textarea id="ai-input" rows="6" placeholder="Paste a job description or a resume bullet and say what you want..."></textarea>
-  <button id="ai-run">Generate</button>
-  <pre id="ai-output" class="ai-output"></pre>
-</section>
-
-<script>
-  const btn = document.getElementById('ai-run');
-  const input = document.getElementById('ai-input');
-  const out = document.getElementById('ai-output');
-
-  btn.addEventListener('click', async () => {
-    const prompt = input.value.trim();
-    if (!prompt) { out.textContent = 'Please write something first.'; return; }
-    btn.disabled = true; out.textContent = 'Generating...';
-
-    try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt })
+        try {
+          const res = await fetch("/api/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt }),
+          });
+          const data = await res.json();
+          out.textContent = data.text || data.error || "No response.";
+        } catch {
+          out.textContent = "Network error.";
+        } finally {
+          btn.disabled = false;
+        }
       });
-
-      const data = await res.json();
-      out.textContent = data.text || data.error || 'No response.';
-    } catch (err) {
-      out.textContent = 'Network error.';
-    } finally {
-      btn.disabled = false;
-    }
-  });
-</script>
+    </script>
+  </body>
+</html>
 
   
      
