@@ -1,475 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HireMe — Say it with confidence</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta name="description" content="The student-friendly CV & Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch." />
+// Vercel Serverless Function: POST /api/generate
+// No packages needed. Uses built-in fetch and your OPENAI_API_KEY env var.
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg:#FFE5D1;
-      --card:#fff;
-      --ink:#3b3b3b;
-      --muted:#7b7b7b;
-      --accent:#FF7A45;
-      --ring: rgba(0,0,0,.05);
-      --shadow: 0 20px 60px rgba(0,0,0,.14);
-      --radius: 18px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Poppins, system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial, Noto Sans, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol";
-      color:var(--ink);
-      background:
-        radial-gradient(1200px 600px at 75% -200px, #fff 0%, transparent 50%),
-        var(--bg);
-    }
-
-    /* Header */
-    .nav{
-      position:sticky; top:0; z-index:5;
-      background:transparent;
-    }
-    .nav__inner{
-      height:74px; display:flex; align-items:center; gap:24px;
-      max-width:1100px; margin:0 auto; padding:0 20px;
-    }
-    .brand{display:flex; align-items:center; gap:14px; font-weight:700}
-    .logo{
-      width:34px; height:34px; border-radius:10px;
-      display:grid; place-items:center;
-      background:#fff; box-shadow:var(--shadow);
-    }
-    .brand__text{font-weight:700}
-    .brand__text .accent{color:var(--accent); font-family:Pacifico; font-size:1.05em}
-
-    .nav-links{margin-left:24px; display:flex; gap:18px; color:var(--muted)}
-    .nav-links a{color:inherit; text-decoration:none}
-    .nav-links a:hover{color:var(--ink)}
-
-    .nav-actions{margin-left:auto; display:flex; gap:10px; align-items:center}
-    select, .btn{
-      border-radius:12px; border:1px solid #eee; background:#fff; color:var(--ink);
-      padding:.6rem .9rem; font-weight:600;
-    }
-    select{padding:.55rem .8rem}
-    .btn--primary{background:var(--accent); border-color:var(--accent); color:#fff}
-    .btn--ghost:hover{background:#fff}
-
-    /* Hero */
-    .shell{max-width:1100px; margin:0 auto; padding:22px 20px 64px}
-    .hero{
-      margin-top:10px;
-      display:grid; grid-template-columns:1.05fr .95fr; gap:34px;
-      align-items:center;
-    }
-    @media (max-width:920px){ .hero{grid-template-columns:1fr; gap:28px} }
-
-    h1{font-size:clamp(28px, 4.2vw, 48px); line-height:1.1; margin:0 0 12px}
-    .accent-word{color:var(--accent); font-family:Pacifico; font-weight:400}
-    .lead{color:var(--muted); font-size:1.05rem; max-width:48ch}
-
-    /* Preview card */
-    .preview{
-      background:var(--card); border-radius:var(--radius);
-      box-shadow:var(--shadow); padding:18px; min-height:380px;
-    }
-    .row{height:10px; border-radius:8px; background:#f2f2f2}
-    .row.big{height:120px}
-    .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
-    .box{height:140px; border-radius:14px; background:#f3f3f3}
-    .chip{display:inline-flex; gap:8px; align-items:center; color:var(--muted); font-size:.92rem}
-
-    /* Section: features below hero (kept minimal) */
-    .features{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:28px}
-    .feature{background:#fff; border-radius:16px; box-shadow:var(--shadow); padding:16px}
-    .feature h3{margin:0 0 6px; color:var(--accent)}
-
-    /* Footer */
-    footer{color:var(--muted); font-size:.9rem; text-align:center; padding:40px 0}
-  </style>
-</head>
-<body>
-
-  <!-- Header -->
-  <header class="nav">
-    <div class="nav__inner">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <!-- mortarboard icon -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF7A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 10.5L12 5 2 10.5l10 5 10-5Z"/>
-            <path d="M6 12v5c0 1.7 3 3 6 3s6-1.3 6-3v-5"/>
-          </svg>
-        </div>
-        <div class="brand__text">Hire<span class="accent">Me</span></div>
-      </div>
-
-      <nav class="nav-links">
-        <a href="#how" data-i18n="nav.how">How it works</a>
-        <a href="#preview" data-i18n="nav.preview">Preview</a>
-        <a href="#faq" data-i18n="nav.faq">FAQ</a>
-      </nav>
-
-      <div class="nav-actions">
-        <select id="langSwitcher" aria-label="Change language">
-          <option value="en">EN</option>
-          <option value="fr">FR</option>
-          <option value="nl">NL</option>
-        </select>
-        <button class="btn btn--ghost" data-i18n="cta.signin">Sign in</button>
-      </div>
-    </div>
-  </header>
-
-  <main class="shell">
-    <!-- HERO -->
-    <section class="hero" id="preview">
-      <div>
-        <h1>
-          <span data-i18n="hero.title1">Say it with confidence:</span>
-          <span class="accent-word" data-i18n="hero.title2">Hire Me.</span>
-        </h1>
-        <p class="lead" data-i18n="hero.tagline">
-          The student-friendly CV & Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch.
-        </p>
-      </div>
-
-      <!-- Simple illustration card -->
-      <aside class="preview" aria-label="Sample preview">
-        <div class="chip">
-          <span aria-hidden="true">🎓</span>
-          <span data-i18n="card.title">Sample CV • Student</span>
-        </div>
-
-        <div style="height:14px"></div>
-
-        <div class="row" style="width:58%"></div>
-        <div style="height:8px"></div>
-        <div class="row" style="width:42%"></div>
-
-        <div style="height:14px"></div>
-        <div class="grid">
-          <div class="box"></div>
-          <div class="box"></div>
-        </div>
-
-        <div style="height:14px"></div>
-        <div class="row big" style="width:100%"></div>
-
-        <div style="height:14px"></div>
-        <div class="row" style="width:76%"></div>
-      </aside>
-    </section>
-
-    <!-- FEATURES (kept short/clean) -->
-    <section class="features" id="how">
-      <article class="feature">
-        <h3 data-i18n="features.ats.h">ATS-friendly</h3>
-        <p class="muted" data-i18n="features.ats.p">Templates that pass screening</p>
-      </article>
-      <article class="feature">
-        <h3 data-i18n="features.multi.h">Multilingual</h3>
-        <p class="muted" data-i18n="features.multi.p">EN / FR / NL</p>
-      </article>
-      <article class="feature">
-        <h3 data-i18n="features.one.h">One-click</h3>
-        <p class="muted" data-i18n="features.one.p">PDF export</p>
-      </article>
-    </section>
-
-    <!-- FAQ anchor just for completeness -->
-    <section id="faq" style="margin-top:34px">
-      <h2 style="margin:0 0 12px" data-i18n="faq.h">FAQ</h2>
-      <p class="muted" data-i18n="faq.p">More details coming soon.</p>
-    </section>
-  </main>
-
-  <footer>
-    <span data-i18n="foot.made">Made for students and grads.</span>
-  </footer>
-
-  <!-- Language system -->
-  <script>
-    (function(){
-      const T = {
-        en: {
-          "nav.how":"How it works",
-          "nav.preview":"Preview",
-          "nav.faq":"FAQ",
-          "cta.signin":"Sign in",
-
-          "hero.title1":"Say it with confidence:",
-          "hero.title2":"Hire Me.",
-          "hero.tagline":"The student-friendly CV & Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch.",
-
-          "card.title":"Sample CV • Student",
-
-          "features.ats.h":"ATS-friendly",
-          "features.ats.p":"Templates that pass screening",
-          "features.multi.h":"Multilingual",
-          "features.multi.p":"EN / FR / NL",
-          "features.one.h":"One-click",
-          "features.one.p":"PDF export",
-
-          "faq.h":"FAQ",
-          "faq.p":"More details coming soon.",
-          "foot.made":"Made for students and grads."
-        },
-        fr: {
-          "nav.how":"Comment ça marche",
-          "nav.preview":"Aperçu",
-          "nav.faq":"FAQ",
-          "cta.signin":"Se connecter",
-
-          "hero.title1":"Dites-le avec assurance :",
-          "hero.title2":"Hire Me.",
-          "hero.tagline":"Le studio CV & lettre de motivation pour étudiants. Créez un CV élégant et compatible ATS en quelques minutes — en anglais, français ou néerlandais.",
-
-          "card.title":"Exemple de CV • Étudiant",
-
-          "features.ats.h":"Compatible ATS",
-          "features.ats.p":"Modèles qui passent les filtres",
-          "features.multi.h":"Multilingue",
-          "features.multi.p":"EN / FR / NL",
-          "features.one.h":"En un clic",
-          "features.one.p":"Export PDF",
-
-          "faq.h":"FAQ",
-          "faq.p":"Plus de détails bientôt.",
-          "foot.made":"Créé pour les étudiants et jeunes diplômés."
-        },
-        nl: {
-          "nav.how":"Zo werkt het",
-          "nav.preview":"Voorbeeld",
-          "nav.faq":"FAQ",
-          "cta.signin":"Inloggen",
-
-          "hero.title1":"Zeg het met vertrouwen:",
-          "hero.title2":"Hire Me.",
-          "hero.tagline":"De CV- en sollicitatiebrievenstudio voor studenten. Maak in enkele minuten een mooie, ATS-vriendelijke cv — in het Engels, Frans of Nederlands.",
-
-          "card.title":"Voorbeeld-cv • Student",
-
-          "features.ats.h":"ATS-vriendelijk",
-          "features.ats.p":"Templates die screenings doorstaan",
-          "features.multi.h":"Meertalig",
-          "features.multi.p":"EN / FR / NL",
-          "features.one.h":"Eén klik",
-          "features.one.p":"PDF-export",
-
-          "faq.h":"FAQ",
-          "faq.p":"Meer informatie volgt.",
-          "foot.made":"Gemaakt voor studenten en afgestudeerden."
-        }
-      };
-
-      const LANG_KEY = 'hireme.lang';
-      const $html = document.documentElement;
-      const $switcher = document.getElementById('langSwitcher');
-
-      function apply(lang){
-        const dict = T[lang] || T.en;
-        $html.setAttribute('lang', lang);
-        document.querySelectorAll('[data-i18n]').forEach(el=>{
-          const key = el.getAttribute('data-i18n');
-          if(dict[key] != null) el.textContent = dict[key];
-        });
-      }
-
-      // init from storage or <html lang>
-      const saved = localStorage.getItem(LANG_KEY);
-      const initial = saved || $html.getAttribute('lang') || 'en';
-      apply(initial);
-      if($switcher){ $switcher.value = initial; }
-
-      // Switcher change
-      if($switcher){
-        $switcher.addEventListener('change', (e)=>{
-          const lang = e.target.value;
-          localStorage.setItem(LANG_KEY, lang);
-          apply(lang);
-        });
-      }
-    })();
- </script>
-  <script>
-  // 1) Your translations
-  const I18N = {
-    en: {
-      "nav.how": "How it works",
-      "nav.preview": "Preview",
-      "nav.faq": "FAQ",
-
-      "hero.title1": "Say it with confidence:",
-      "hero.brand": "Hire Me.",
-      "hero.subtitle":
-        "The student-friendly CV & Cover Letter studio. Create a beautiful, ATS-friendly resume in minutes — in English, French, or Dutch.",
-
-      "cards.ats.title": "ATS-friendly",
-      "cards.ats.body": "Templates that pass screening",
-      "cards.multi.title": "Multilingual",
-      "cards.multi.body": "EN / FR / NL",
-      "cards.export.title": "One-click",
-      "cards.export.body": "PDF export"
-    },
-
-    fr: {
-      "nav.how": "Comment ça marche",
-      "nav.preview": "Aperçu",
-      "nav.faq": "FAQ",
-
-      "hero.title1": "Dites-le avec confiance :",
-      "hero.brand": "Hire Me.",
-      "hero.subtitle":
-        "Le studio CV & lettre de motivation pour étudiants. Créez un CV élégant, compatible ATS, en quelques minutes — en anglais, français ou néerlandais.",
-
-      "cards.ats.title": "Compatible ATS",
-      "cards.ats.body": "Modèles qui passent le tri",
-      "cards.multi.title": "Multilingue",
-      "cards.multi.body": "EN / FR / NL",
-      "cards.export.title": "En un clic",
-      "cards.export.body": "Export PDF"
-    },
-
-    nl: {
-      "nav.how": "Hoe het werkt",
-      "nav.preview": "Voorbeeld",
-      "nav.faq": "FAQ",
-
-      "hero.title1": "Zeg het met vertrouwen:",
-      "hero.brand": "Hire Me.",
-      "hero.subtitle":
-        "De CV- en sollicitatiebriefstudio voor studenten. Maak in minuten een mooie, ATS-vriendelijke cv — in het Engels, Frans of Nederlands.",
-
-      "cards.ats.title": "ATS-vriendelijk",
-      "cards.ats.body": "Templates die de screening halen",
-      "cards.multi.title": "Meertalig",
-      "cards.multi.body": "EN / FR / NL",
-      "cards.export.title": "Met één klik",
-      "cards.export.body": "PDF-export"
-    }
-  };
-
-  // 2) Apply a language to the page
-  function applyLang(lang) {
-    const dict = I18N[lang] || I18N.en;
-    document.documentElement.lang = lang;
-    document.querySelectorAll("[data-i18n]").forEach(el => {
-      const key = el.getAttribute("data-i18n");
-      if (dict[key]) el.textContent = dict[key];
-    });
-    localStorage.setItem("lang", lang);
-    const sel = document.getElementById("lang");
-    if (sel) sel.value = lang;
+module.exports = async (req, res) => {
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
-  // 3) Init on load
-  (function initI18n() {
-    const saved = localStorage.getItem("lang") || "en";
-    applyLang(saved);
-
-    const sel = document.getElementById("lang");
-    if (sel) {
-      sel.addEventListener("change", (e) => applyLang(e.target.value));
+  try {
+    const { prompt } = req.body || {};
+    if (!prompt || !prompt.trim()) {
+      res.status(400).json({ error: 'Prompt is required' });
+      return;
     }
-  })();
+
+    const r = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: 'You help job seekers tailor resumes and write cover letters. Be concise and actionable.' },
+          { role: 'user', content: prompt }
+        ]
+      })
+    });
+
+    if (!r.ok) {
+      const errText = await r.text();
+      res.status(500).json({ error: `OpenAI error: ${errText}` });
+      return;
+    }
+
+    const data = await r.json();
+    const text = data?.choices?.[0]?.message?.content ?? '';
+    res.status(200).json({ text });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+<section class="ai-box">
+  <h2>GetHireMe — AI Assistant</h2>
+  <textarea id="ai-input" rows="6" placeholder="Paste a job description or a resume bullet and say what you want..."></textarea>
+  <button id="ai-run">Generate</button>
+  <pre id="ai-output" class="ai-output"></pre>
+</section>
+
+<script>
+  const btn = document.getElementById('ai-run');
+  const input = document.getElementById('ai-input');
+  const out = document.getElementById('ai-output');
+
+  btn.addEventListener('click', async () => {
+    const prompt = input.value.trim();
+    if (!prompt) { out.textContent = 'Please write something first.'; return; }
+    btn.disabled = true; out.textContent = 'Generating...';
+
+    try {
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+
+      const data = await res.json();
+      out.textContent = data.text || data.error || 'No response.';
+    } catch (err) {
+      out.textContent = 'Network error.';
+    } finally {
+      btn.disabled = false;
+    }
+  });
 </script>
-<!-- =========================
-     AUTH MODAL (Sign in / Sign up)
-     ========================= -->
-<div id="authModal" class="modal" aria-hidden="true">
-  <div class="modal__overlay" data-auth-close></div>
 
-  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-    <button class="modal__close" type="button" aria-label="Close" data-auth-close>×</button>
-
-    <!-- Header / Switch -->
-    <div class="auth__tabs" role="tablist">
-      <button id="tabSignIn" class="auth__tab is-active" role="tab" aria-selected="true" data-auth-tab="signin">
-        <span data-i18n="auth.signIn">Sign in</span>
-      </button>
-      <button id="tabSignUp" class="auth__tab" role="tab" aria-selected="false" data-auth-tab="signup">
-        <span data-i18n="auth.signUp">Create account</span>
-      </button>
-    </div>
-
-    <!-- Sign in -->
-    <form id="formSignIn" class="auth__panel is-active" novalidate>
-      <h3 id="authTitle" class="auth__title" data-i18n="auth.welcomeBack">Welcome back</h3>
-
-      <label class="auth__label">
-        <span data-i18n="auth.email">Email</span>
-        <input id="siEmail" class="auth__input" type="email" autocomplete="email" required />
-      </label>
-
-      <label class="auth__label">
-        <span data-i18n="auth.password">Password</span>
-        <input id="siPassword" class="auth__input" type="password" autocomplete="current-password" required />
-      </label>
-
-      <div class="auth__row">
-        <a class="auth__link" href="#" data-i18n="auth.forgot">Forgot your password?</a>
-      </div>
-
-      <button class="btn btn--primary auth__submit" type="submit" data-i18n="auth.signIn">Sign in</button>
-
-      <p class="auth__hint">
-        <span data-i18n="auth.noAccount">Don’t have an account?</span>
-        <a href="#" data-auth-tab="signup" class="auth__link" data-i18n="auth.createOne">Create one</a>
-      </p>
-
-      <p id="siError" class="auth__error" role="alert" hidden></p>
-    </form>
-
-    <!-- Sign up -->
-    <form id="formSignUp" class="auth__panel" novalidate>
-      <h3 class="auth__title" data-i18n="auth.letsStart">Let’s get you started</h3>
-
-      <label class="auth__label">
-        <span data-i18n="auth.name">Full name</span>
-        <input id="suName" class="auth__input" type="text" autocomplete="name" required />
-      </label>
-
-      <label class="auth__label">
-        <span data-i18n="auth.email">Email</span>
-        <input id="suEmail" class="auth__input" type="email" autocomplete="email" required />
-      </label>
-
-      <label class="auth__label">
-        <span data-i18n="auth.password">Password</span>
-        <input id="suPassword" class="auth__input" type="password" autocomplete="new-password" required />
-      </label>
-
-      <label class="auth__checkbox">
-        <input id="suTerms" type="checkbox" required />
-        <span data-i18n="auth.agree">I agree to the Terms</span>
-      </label>
-
-      <button class="btn btn--primary auth__submit" type="submit" data-i18n="auth.createAccount">Create account</button>
-
-      <p class="auth__hint">
-        <span data-i18n="auth.haveAccount">Already have an account?</span>
-        <a href="#" data-auth-tab="signin" class="auth__link" data-i18n="auth.signIn">Sign in</a>
-      </p>
-
-      <p id="suError" class="auth__error" role="alert" hidden></p>
-    </form>
-  </div>
-</div>
-
-</body>
-</html>
-
+  
+     
        
 
  
