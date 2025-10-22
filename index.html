@@ -9,26 +9,106 @@
   </head>
   <body>
     <main class="container">
-      <h1>GetHireMe — AI Assistant</h1>
+      <header class="ghm-header">
+        <h1>GetHireMe — AI Assistant</h1>
+        <p class="muted">Tailor resume bullets, summaries, and cover-letter lines in one click.</p>
+      </header>
 
+      <!-- Preset prompts -->
+      <div class="preset-bar" role="toolbar" aria-label="Preset prompts">
+        <button class="pill" data-prompt="Write a 3–4 sentence professional summary for a junior marketing assistant.">Resume summary</button>
+        <button class="pill" data-prompt="Turn this into 3 strong, results-focused resume bullets:">Tailor bullets</button>
+        <button class="pill" data-prompt="Write a confident first paragraph for a cover letter for a customer support role.">Cover letter intro</button>
+        <button class="pill" data-prompt="Summarize the key requirements from this job description:">JD summary</button>
+      </div>
+
+      <!-- Input -->
       <section class="ai-box">
-        <textarea id="ai-input" rows="6" placeholder="Paste a job description or resume bullet here..."></textarea>
-        <button id="ai-run">Generate</button>
-        <pre id="ai-output" class="ai-output"></pre>
+        <label for="ai-input" class="sr-only">Prompt</label>
+        <textarea id="ai-input" rows="7" placeholder="Paste a job description or a resume bullet…"></textarea>
+
+        <div class="controls">
+          <span id="charCount" class="muted">0 chars</span>
+          <div class="btns">
+            <button id="ai-run" class="btn primary">Generate</button>
+            <button id="ai-clear" class="btn">Clear</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Output -->
+      <section id="resultCard" class="card hidden" aria-live="polite">
+        <div class="card-head">
+          <h2>Result</h2>
+          <div class="card-actions">
+            <button id="copyBtn" class="icon-btn" title="Copy">Copy</button>
+            <button id="downloadBtn" class="icon-btn" title="Download">Download</button>
+          </div>
+        </div>
+        <div id="ai-output" class="ai-output"></div>
       </section>
     </main>
 
     <script>
-      const btn = document.getElementById("ai-run");
+      // Elements
       const input = document.getElementById("ai-input");
-      const out = document.getElementById("ai-output");
+      const runBtn = document.getElementById("ai-run");
+      const clearBtn = document.getElementById("ai-clear");
+      const output = document.getElementById("ai-output");
+      const resultCard = document.getElementById("resultCard");
+      const charCount = document.getElementById("charCount");
+      const copyBtn = document.getElementById("copyBtn");
+      const downloadBtn = document.getElementById("downloadBtn");
+      const presetBar = document.querySelector(".preset-bar");
 
-      btn.addEventListener("click", async () => {
+      // Small helpers
+      function setLoading(isLoading) {
+        runBtn.disabled = isLoading;
+        runBtn.textContent = isLoading ? "Generating…" : "Generate";
+      }
+      function showCard() { resultCard.classList.remove("hidden"); }
+      function typeOut(el, text) {
+        el.textContent = "";
+        let i = 0;
+        const tick = () => {
+          if (i < text.length) { el.textContent += text[i++]; requestAnimationFrame(tick); }
+        };
+        requestAnimationFrame(tick);
+      }
+
+      // Character counter
+      input.addEventListener("input", () => {
+        charCount.textContent = input.value.length + " chars";
+      });
+
+      // Preset prompt clicks
+      presetBar.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-prompt]");
+        if (!btn) return;
+        const p = btn.getAttribute("data-prompt");
+        // If user already typed something, append; else set fresh
+        input.value = input.value ? (p + "\n\n" + input.value) : p;
+        input.dispatchEvent(new Event("input"));
+        input.focus();
+      });
+
+      // Clear
+      clearBtn.addEventListener("click", () => {
+        input.value = "";
+        output.textContent = "";
+        charCount.textContent = "0 chars";
+        resultCard.classList.add("hidden");
+        input.focus();
+      });
+
+      // Generate
+      runBtn.addEventListener("click", async () => {
         const prompt = input.value.trim();
-        if (!prompt) { out.textContent = "Please write something first."; return; }
+        if (!prompt) { alert("Please paste or type a prompt first."); return; }
 
-        btn.disabled = true;
-        out.textContent = "Generating...";
+        setLoading(true);
+        showCard();
+        output.textContent = "Thinking…";
 
         try {
           const res = await fetch("/api/generate", {
@@ -36,17 +116,42 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ prompt }),
           });
+
           const data = await res.json();
-          out.textContent = data.text || data.error || "No response.";
-        } catch {
-          out.textContent = "Network error.";
+          const text = data.text || data.error || "No response.";
+          typeOut(output, text);
+        } catch (err) {
+          output.textContent = "Network error.";
         } finally {
-          btn.disabled = false;
+          setLoading(false);
         }
+      });
+
+      // Copy
+      copyBtn.addEventListener("click", async () => {
+        const text = output.textContent.trim();
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+          copyBtn.textContent = "Copied!";
+          setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
+        } catch {}
+      });
+
+      // Download
+      downloadBtn.addEventListener("click", () => {
+        const text = output.textContent.trim();
+        if (!text) return;
+        const blob = new Blob([text], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = "gethireme.txt"; a.click();
+        URL.revokeObjectURL(url);
       });
     </script>
   </body>
 </html>
+
 
   
      
