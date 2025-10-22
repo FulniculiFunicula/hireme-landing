@@ -1,8 +1,6 @@
 :root{
-  --orange:#FF7A36;
-  --peach:#FFE7D3;
-  --charcoal:#444444;
-  --white:#FFFFFF;
+ --brand: #1a1a1a;        /* deeper charcoal for buttons */
+--brand-accent: #ff7b2e; /* orange that matches your logo/fav icon */
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--charcoal);background:var(--peach)}
