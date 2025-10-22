@@ -73,6 +73,12 @@
       const copyBtn = document.getElementById("copyBtn");
       const downloadBtn = document.getElementById("downloadBtn");
       const presetBar = document.querySelector(".preset-bar");
+function flashGlow(cardEl) {
+  cardEl.classList.remove("glow");
+  // force reflow so the animation restarts each time
+  void cardEl.offsetWidth;
+  cardEl.classList.add("glow");
+}
 
       // Small helpers
       function setLoading(isLoading) {
@@ -132,7 +138,8 @@
 
           const data = await res.json();
           const text = data.text || data.error || "No response.";
-          typeOut(output, text);
+          typeOut(output, text);flashGlow(resultCard);
+
         } catch (err) {
           output.textContent = "Network error.";
         } finally {
